@@ -32,7 +32,7 @@
                             <div class="col-md"><h4>{{exame.exame.nome}}</h4></div>
                             <div class="col-md"><h5>{{exame.badge_template}}</h5></div>
                             <div class="col-md">
-                                <a href="#" class="btn btn-light">Abrir</a>
+                              <a href="{% url "exame_cliente" exame.id %}" class="btn btn-light">Abrir</a>
                             </div>
                         </div>
                         <br>
@@ -50,7 +50,7 @@
                         <div class="row">
                             <div class="col-md"><h4>{{exame.exame.nome}}</h4></div>
                             <div class="col-md"><h5>{{exame.badge_template}}</h5></div>
-                            <div class="col-md"><a href="#" class="btn btn-light">Abrir</a></div>
+                            <div class="col-md"><a href="{% url "exame_cliente" exame.id %}" class="btn btn-light">Abrir</a></div>
                         </div>
                         <br>
                     {% endif %}
