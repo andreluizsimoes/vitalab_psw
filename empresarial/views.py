@@ -77,6 +77,6 @@ def alterar_dados_exame(request, exame_id):
         
     exame.status = status
     exame.save()
-    messages.add_message(request, constants.SUCCESS, 'Alteração realizada com sucesso')
+    messages.add_message(request, constants.SUCCESS, 'Alteração realizada com sucesso!')
     return redirect(f'/empresarial/exame_cliente/{exame_id}')
 
