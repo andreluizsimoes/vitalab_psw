@@ -6,3 +6,9 @@ body {
 p {
   color: var(--light-color);
 }
+
+a {
+  color: var(--light-color);
+  text-decoration: none;
+  font-weight: 600;
+}

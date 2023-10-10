@@ -19,7 +19,7 @@ def cadastro(request):
         confirmar_senha = request.POST.get('confirmar_senha')
 
 
-        if User.objects.filter(username=username).exists:
+        if User.objects.filter(username=username).exists():
             messages.add_message(request, constants.ERROR, 'Este nome de usuário já existe!')
             return redirect('/usuarios/cadastro')
 
@@ -58,8 +58,11 @@ def logar(request):
         user = authenticate(username=username, password=senha)
         if user:
             login(request, user)
-            # Acontecerá um erro ao redirecionar por enquanto, resolveremos nos próximos passos
-            return redirect('/')
+            if user.is_staff:            
+                return redirect('/empresarial/gerenciar_clientes')
+            else:
+                return redirect('/exames/gerenciar_exames')
+
         else:
             messages.add_message(request, constants.ERROR, 'Usuario ou senha inválidos')
             return redirect('/usuarios/login')
