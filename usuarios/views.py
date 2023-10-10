@@ -19,36 +19,31 @@ def cadastro(request):
         confirmar_senha = request.POST.get('confirmar_senha')
 
 
-        def username_existe(username):
-            # Tenta encontrar um usuário com o mesmo username na base de dados
-            try:
-                user = User.objects.get(username=username)
-                messages.add_message(request, constants.ERROR, 'Este nome de usuário já existe!')
-                return True  # Se encontrar um usuário, retorna True (já existe)
-            except User.DoesNotExist:
-                return False  # Se não encontrar, retorna False (não existe)
+        if User.objects.filter(username=username).exists:
+            messages.add_message(request, constants.ERROR, 'Este nome de usuário já existe!')
+            return redirect('/usuarios/cadastro')
 
-        if not username_existe(username):
-            if not senha == confirmar_senha:
-                messages.add_message(request, constants.ERROR, 'As senhas não coincidem!')
-                return redirect('/usuarios/cadastro')
-            
-            if len(senha) < 6:
-                messages.add_message(request, constants.ERROR, 'Sua senha deve ter no mínimo 6 digitos!')
-                return redirect('/usuarios/cadastro')           
-            
-            try:
-                user = User.objects.create_user(
-                    username = username,
-                    password = senha,
-                    email = email,
-                    first_name = primeiro_nome,
-                    last_name = ultimo_nome
-                )
-                messages.add_message(request, constants.SUCCESS, 'Usuário cadastrado com sucesso!')
-            except:
-                messages.add_message(request, constants.ERROR, 'Erro inteno do sistema. Contacte um administrador.')
-                return redirect('/usuarios/cadastro')
+        
+        if not senha == confirmar_senha:
+            messages.add_message(request, constants.ERROR, 'As senhas não coincidem!')
+            return redirect('/usuarios/cadastro')
+        
+        if len(senha) < 6:
+            messages.add_message(request, constants.ERROR, 'Sua senha deve ter no mínimo 6 digitos!')
+            return redirect('/usuarios/cadastro')           
+        
+        try:
+            user = User.objects.create_user(
+                username = username,
+                password = senha,
+                email = email,
+                first_name = primeiro_nome,
+                last_name = ultimo_nome
+            )
+            messages.add_message(request, constants.SUCCESS, 'Usuário cadastrado com sucesso!')
+        except:
+            messages.add_message(request, constants.ERROR, 'Erro inteno do sistema. Contacte um administrador.')
+            return redirect('/usuarios/cadastro')
 
 
 
